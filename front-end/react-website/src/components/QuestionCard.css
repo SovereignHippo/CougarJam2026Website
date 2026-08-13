@@ -1,0 +1,7 @@
+.question-card-body{
+    background-color: white;
+    border: 10px solid white;
+    border-radius: 10px;
+    width: 70vw;
+    margin: 20px;
+}
