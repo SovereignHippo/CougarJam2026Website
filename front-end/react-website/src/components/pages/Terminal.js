@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import '../../App.css'
-import textAdventure from "../../data/textAdventure";
+import {textAdventure, textAdventureTrueEnding} from "../../data/textAdventure";
 
-const sounds = [
+const typingSounds = [
     new Audio('/sounds/keypresses/keypress-001.wav'),
     new Audio('/sounds/keypresses/keypress-002.wav'),
     new Audio('/sounds/keypresses/keypress-003.wav'),
@@ -37,22 +37,43 @@ const sounds = [
     new Audio('/sounds/keypresses/keypress-032.wav'),
 ];
 
+const terminalSound = new Audio('/sounds/electronic-keystrokes.wav');
+terminalSound.loop = true;
+terminalSound.volume = .5;
+
 export default function Terminal() {
 
     const [message, setMessage] = useState("");
 
     const [messageLog, setMessageLog] = useState([{}]);
 
-    const [currentDialogue, setCurrentDualogue] = useState(textAdventure);
+    const [currentDialogue, setCurrentDualogue] = useState((localStorage.getItem('endingsFound') == "1111" && textAdventureTrueEnding) || textAdventure);
+
+    const [endingsFound, setEndingsFound] = useState(localStorage.getItem('endingsFound') || "0000")
 
     const terminalDisplay = document.getElementById('terminal-display-box')
 
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
+    let isSkipPressed = false;
+
+    document.addEventListener("keydown", (event) => {
+        if(event.key == "ArrowRight" || event.key == "ArrowDown" || event.key == "Shift"){
+            isSkipPressed = true;
+        }
+        
+    })
+    document.addEventListener("keyup", (event) => {
+        if(event.key == "ArrowRight" || event.key == "ArrowDown" || event.key == "Shift"){
+            isSkipPressed = false;
+        }
+        
+    })
+
 
     function handleChange(event){
         setMessage(event.target.value);
-        sounds[Math.floor(Math.random() * sounds.length)].play();
+        typingSounds[Math.floor(Math.random() * typingSounds.length)].play();
     }
 
     async function handleSubmit(event){
@@ -66,6 +87,8 @@ export default function Terminal() {
         CheckAnswer();
     }
 
+    
+
     useEffect(()=>{
         //scroll down when new things are added
         UpdateScrollHeight();
@@ -74,33 +97,67 @@ export default function Terminal() {
 
     useEffect(() => {
         DisplayCurrentDialouge();
+        if(currentDialogue.ending){
+            
+        }
     },[currentDialogue])
 
-    function DisplayCurrentDialouge(){
+    async function DisplayCurrentDialouge(){
         let output = currentDialogue.prompt;
-        for(let item of currentDialogue.options){
-            
-            output += "\n-" + item.choice;
+        let owner = "bot";
+
+        
+
+        if(currentDialogue.owner){
+            //overide the owner tag if it has one
+            owner = currentDialogue.owner;
         }
-        setMessageLog([...messageLog, {message: output, owner: "bot"}]);
+
+        //check if there are options
+        if(currentDialogue.options){
+            for(let item of currentDialogue.options){
+            
+                output += "\n-" + item.choice;
+            }
+            await TypeResponse(output, owner);
+        }else{
+            //if no options go on
+            await TypeResponse(output, owner);
+            if(currentDialogue.fnc && currentDialogue.fnc(message)){
+                //runs fnc
+            }else{
+                //only do check answer if it is not open eneded
+                //wait a beat before doing next line
+                await delay(450);
+                CheckAnswer();
+            }
+            
+        }
+
+        if(currentDialogue.ending){
+            UpdateEndings(currentDialogue.ending);
+        }
+        
+        
+        
     }
 
     function CheckAnswer(){
-        for(let item of currentDialogue.options){
-            if(item.choice.toLowerCase() == message.toLowerCase()){
-                currentDialogue.fnc(message)
-                setCurrentDualogue(item.next);
-                return;
-            }
-        }
-        //no matches were found
-        if(!currentDialogue.fnc(message)){ //check if it was a open ended quesiton
-            if(currentDialogue.next || currentDialogue.options.length > 0){ //check to see if there is more dilogue. If not it stops responding
-                setMessageLog([...messageLog,{message: message, owner: "user"}, {message: "Sorry, what was that?", owner: "bot"}])
-            }
-        }else{
-            //move to the next dialoge
+        if(currentDialogue.options){//check if there are options
+            for(let item of currentDialogue.options){
+                if(item.choice.toLowerCase() == message.toLowerCase() || item.choice[0].toLowerCase() == message[0].toLowerCase()){
+                    (currentDialogue.fnc && currentDialogue.fnc(message))
+                    setCurrentDualogue(item.next);
+                    return;
+                }
+            }//if the loop does not return that means they entered an invalid answer
+            setMessageLog([...messageLog,{message: message, owner: "user"}, {message: "Sorry, what was that?", owner: "bot"}])
+        }else if(currentDialogue.next){//make sure its not the end
+            //there are no options
+            //it is either open ended or need to immidiatly go to the next prompt
+            (currentDialogue.fnc && currentDialogue.fnc(message))
             setCurrentDualogue(currentDialogue.next);
+            
         }
         
          
@@ -110,6 +167,67 @@ export default function Terminal() {
         if(terminalDisplay){
             terminalDisplay.scrollTop = terminalDisplay.scrollHeight;
         }
+    }
+
+    async function TypeResponse(message, owner){
+
+        messageLog.push("");
+        var letterCount = 1;
+
+        //start the terminal sound
+        
+        if(message.length > 3){
+                //dont play for short messages, its annoying
+                terminalSound.play().catch(error => {
+                //console.log("Sound Error for Terminal: " + error);
+            })
+        }
+
+        while(letterCount <= message.length){
+            if(isSkipPressed){
+                messageLog[messageLog.length-1] = {message: message, owner: owner};
+                setMessageLog([...messageLog]);
+                break;
+            }
+            messageLog[messageLog.length - 1] = {message: message.slice(0,letterCount), owner: owner};
+            letterCount++;
+            setMessageLog([...messageLog]);
+            //time between each letter
+            await delay(40);
+        }
+        //stop the termianl sound
+        terminalSound.pause();
+        terminalSound.playbackRate = 1; //reset playback rate
+
+
+        setMessageLog(messageLog);
+    }
+
+    function UpdateEndings(newEnding){
+        let temp = "";
+        let endingsFoundCounter = 0;
+        for(let i = 0; i < newEnding.length; i++){
+            if(newEnding[i] == '1' || endingsFound[i] == '1'){
+                temp = temp + '1';
+                endingsFoundCounter++;
+            }else{
+                temp = temp + '0';
+            }
+        }
+
+        
+
+        if(endingsFoundCounter == 4){
+            //all endings have been found
+            setCurrentDualogue({prompt:`All Endings Found, secret ending unlocked!`, owner:"bot-good"});
+        }else{
+            setCurrentDualogue({prompt:`Endings Found ${endingsFoundCounter}/4`, owner:"bot-good"});
+        }
+
+    
+        
+        setEndingsFound(temp);
+        localStorage.setItem('endingsFound',temp);
     }
 
 

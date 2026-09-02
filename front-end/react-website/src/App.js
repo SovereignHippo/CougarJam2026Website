@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css';
 import HeroSection from './components/HeroSection';
 import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route,  HashRouter } from 'react-router-dom';
 import Home from './components/pages/Home.js'
 import Services from './components/pages/Services.js';
 import Products from './components/pages/Products.js';
@@ -11,9 +11,11 @@ import Footer from './components/Footer'
 import Terminal from './components/pages/Terminal.js';
 
 function App() {
+
+
   return (
     <>
-      <Router>
+      <HashRouter>
         <Navbar />
         <Routes>
           <Route path='/' exact Component={Home}/>
@@ -22,8 +24,10 @@ function App() {
           <Route path='/sign-up' exact Component={SignUp}/>
           <Route path='/terminal' exact Component={Terminal}/>
         </Routes>
+
+        
         <Footer />
-      </Router>
+      </HashRouter>
       
     </>
   );

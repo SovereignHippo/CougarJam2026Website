@@ -62,11 +62,11 @@ function Navbar() {
                         FAQ
                     </Link>
                 </li>
-                <li className='nav-item'>
+                {/* <li className='nav-item'>
                     <Link to='/terminal' className='nav-links' onClick={closeMobileMenu}>
                         Terminal
                     </Link>
-                </li>
+                </li> */}
                 {/* <li className='nav-item'>
                     <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
                         Sign up

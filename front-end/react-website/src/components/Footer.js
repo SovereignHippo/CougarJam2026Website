@@ -22,6 +22,7 @@ function Footer() {
           <div class='footer-link-items'>
             <h2>Contact</h2>
             <Link to='mailto:gamedevgroup@siue.edu'>gamedevgroup@siue.edu</Link>
+            <Link to='/terminal'>Save the princess</Link>
             {/* <Link to='/'>Ambassadors</Link>
             <Link to='/'>Agency</Link>
             <Link to='/'>Influencer</Link> */}

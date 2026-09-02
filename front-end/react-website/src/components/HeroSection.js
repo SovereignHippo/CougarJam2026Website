@@ -1,4 +1,5 @@
 import React, {useState, useEffect}  from 'react'
+import { preload } from 'react-dom';
 import { Button } from './Button'
 import './HeroSection.css'
 import '../App.css'
@@ -7,7 +8,27 @@ import CountDownClock from './CountDownClock';
 
 function HeroSection() {
 
-    const backgroundImagesList = ['/images/cougar-jam-2025/IMG_0142.jpg',
+  //preload images
+  preload('/images/cougar-jam-2025/IMG_0142.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0145.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0152.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0163.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0183.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0198.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0201.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0304.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0307.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0308.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0311.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0312.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0317.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0318.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0324.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0326.jpg', {as: 'image'});
+  preload('/images/cougar-jam-2025/IMG_0328.jpg', {as: 'image'});
+
+    const backgroundImagesList = [
+        '/images/cougar-jam-2025/IMG_0142.jpg',
         '/images/cougar-jam-2025/IMG_0145.jpg',
         '/images/cougar-jam-2025/IMG_0152.jpg',
         '/images/cougar-jam-2025/IMG_0163.jpg',

@@ -52,8 +52,16 @@
     color: white;
 }
 
-.terminal .user{
+.terminal .bot-evil{
     color: #e5182d;
+}
+
+.terminal .bot-good{
+    color: green;
+}
+
+.terminal .user{
+    color: blueviolet;
 }
 
 .terminal-input-box{
@@ -68,7 +76,7 @@
     height: 3rem;
     margin: 10px;
     font-size: large;
-    color: #e5182d;
+    color: blueviolet;
     background-color: transparent;
     border: solid white;
     padding: 10px;
@@ -88,6 +96,7 @@
   justify-content: flex-start;
   height: fit-content;
   
+  
 }
 
 .services-title{
@@ -101,6 +110,7 @@
     min-height: 90vh;
     
 }
+
 
 .products {
   background-image: url('../public/images/img-1.jpg');

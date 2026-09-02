@@ -26,6 +26,7 @@ h1 {
   list-style-type: none;
   margin-left: 10px;
   margin-right: 10px;
+  min-width: 20rem;
 }
 
 .cards__item {
@@ -94,12 +95,23 @@ h1 {
 
 .cards__item__info {
   padding: 20px 30px 30px;
+  white-space: pre-line;
+  border: #1f98f4 solid 6px;
 }
 
 .cards__item__text {
   color: #252e48;
   font-size: 18px;
   line-height: 24px;
+  justify-self: center;
+}
+
+.cards__item__title{
+  color: #252e48;
+  font-size: 22px;
+  line-height: 24px;
+  justify-self: center;
+  margin-bottom: 5px;
 }
 
 @media only screen and (min-width: 1200px) {

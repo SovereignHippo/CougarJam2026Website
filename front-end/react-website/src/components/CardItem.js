@@ -9,10 +9,11 @@ function CardItem(props) {
     <>
       <li className='cards__items'>
          <Link className='cards__item__link' to={props.path}>
-            <figure className='cards__item__pic-wrap' data-category={props.label}>
+            {/* <figure className='cards__item__pic-wrap' data-category={props.label}>
                 <img src={props.src} alt='Logo' className='cards__item__img' />
-            </figure>
+            </figure> */}
             <div className='cards__item__info'>
+                <h5 className='cards__item__title'>{props.title}</h5>
                 <h5 className='cards__item__text'>{props.text}</h5>
             </div>
          </Link>

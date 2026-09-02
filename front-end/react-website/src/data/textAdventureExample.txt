@@ -1,14 +1,18 @@
+//function gets called evertime the user submits an aswer
+//res is their response
+//fnc should return true if the question is open ended
+
 let textAdventure =  {
     
     prompt: "Will you kill me?",
-    fnc:(res) => {return false},
+    
     options:[
 
         {
             choice:"yes",
             next: {
                 prompt: "oh no",
-                fnc:(res) => {return false},
+                
                 options: []
             }
         },
@@ -16,30 +20,57 @@ let textAdventure =  {
             choice:"no",
             next: {
                 prompt: "Why not?",
-                fnc:(res) => {return false},
+                
                 options: [
                     {
                         choice:"idk",
                         next:{
-                            prompt: "lame",
-                            fnc:(res) => {return false},
-                            options: []
+                            prompt: "you see someone in the distnace",
+                            
+                            next:{
+                                prompt: "there coming closer",
+                                
+                                next:{
+                                    prompt: "its..",
+                                    
+                                    next:{
+                                        prompt: "its...",
+                                        
+                                        next:{
+                                            prompt: "its!",
+                                            
+                                            next:{
+                                                prompt: "Hollywood Superstar Shia Labuff",
+                                                
+                                                next:{
+                                                    prompt: "You Have Died!",
+                                                    
+                                                    owner:"bot-evil",
+                                                    ending: "10000"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     },
                     {
                         choice:"I love you!",
                         next:{
                             prompt: "Nani!",
-                            fnc:(res) => {return false},
-                            options: []
+                            
+                            next:{
+                                prompt: "Thats Crazy",
+                                
+                                options: []
+                            }
                         }
                     },
                     {
                         choice:"I Hate you!",
                         next:{
-                            //this asks the user for a name and says it back to them
                             prompt: "What is your name?",
-                            options:[],
                             fnc:function(res) {
                                 console.log(res)
                                 this.next.prompt = `Nice to meet you ${res}`;
@@ -47,7 +78,7 @@ let textAdventure =  {
                             },
                             next: {
                                 prompt:`nice to meet you`,
-                                fnc:(res) => {return false},
+                                
                                 options: []
                             },
                             
@@ -63,3 +94,5 @@ let textAdventure =  {
 
 
 };
+
+export default textAdventure
