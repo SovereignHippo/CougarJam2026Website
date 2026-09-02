@@ -47,7 +47,7 @@ export default function Terminal() {
 
     const [messageLog, setMessageLog] = useState([{}]);
 
-    const [currentDialogue, setCurrentDualogue] = useState((localStorage.getItem('endingsFound') == "1111" && textAdventureTrueEnding) || textAdventure);
+    const [currentDialogue, setCurrentDualogue] = useState(textAdventure);
 
     const [endingsFound, setEndingsFound] = useState(localStorage.getItem('endingsFound') || "0000")
 
@@ -69,6 +69,12 @@ export default function Terminal() {
         }
         
     })
+
+    useEffect(()=>{
+        if(localStorage.getItem('endingsFound') == "1111"){
+            currentDialogue.next.next.next.options.push(textAdventureTrueEnding);
+        }
+    },[]);
 
 
     function handleChange(event){

@@ -35,7 +35,7 @@
 }
 
 .terminal-display{
-    height: 90%;
+    height: 90vh;
     width: 100%;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -65,7 +65,7 @@
 }
 
 .terminal-input-box{
-    position: absolute;
+    position: relative;
     bottom: 10px;
     width: 98vw;   
 }
