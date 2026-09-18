@@ -5,6 +5,7 @@
 
 h1 {
   text-align: center;
+  font-size: xxx-large;
 }
 
 .cards__container {
@@ -27,6 +28,7 @@ h1 {
   margin-left: 10px;
   margin-right: 10px;
   min-width: 20rem;
+
 }
 
 .cards__item {
@@ -53,6 +55,11 @@ h1 {
   width: 100%;
   padding-top: 67%;
   overflow: hidden;
+}
+
+#long-card{
+  min-width: 100%;
+  
 }
 
 .fade-img {
@@ -97,18 +104,19 @@ h1 {
   padding: 20px 30px 30px;
   white-space: pre-line;
   border: #1f98f4 solid 6px;
+ 
 }
 
 .cards__item__text {
   color: #252e48;
-  font-size: 18px;
+  font-size: large;
   line-height: 24px;
   justify-self: center;
 }
 
 .cards__item__title{
   color: #252e48;
-  font-size: 22px;
+  font-size: x-large;
   line-height: 24px;
   justify-self: center;
   margin-bottom: 5px;

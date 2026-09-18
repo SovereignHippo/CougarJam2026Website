@@ -14,8 +14,9 @@ function Cards() {
                     <CardItem src='images/img-2.jpg' title="📍 Where" text="SIUE's Engineering Building, main Atrium" label="Where?" path="/services"/>
                     <CardItem src='images/img-2.jpg' title="🏆 Hosted By" text="SIUE's Game Development Group" label="What?" path="/services"/>
                 </ul>
-                
+                <CardItem id="long-card" src='images/img-2.jpg' title="Overview" text="Cougar Jam is the SIUE Game Development Group's annual game jam! Teams have three days to make a game complete for scratch! It is a weekend event with special guest judges, free food, and prizes! Open to any college student!" label="What?" path="/services"/>
             </div>
+            
         </div>
     </div>
   )

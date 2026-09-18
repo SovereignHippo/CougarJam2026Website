@@ -4,6 +4,7 @@ import Cards from '../Cards'
 
 
 function Home(){
+
     return (
         <>
             <HeroSection />
